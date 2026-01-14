@@ -142,9 +142,62 @@ signallost/
 
 ---
 
-## Phase 3: Procedural Map Generation
+## Phase 3: Economy & Progression System
 
-### 3.1 Generation Algorithm
+### 3.1 Credits System
+- [ ] Credits as main currency
+- [ ] Starting credits (configurable)
+- [ ] Credits earned from selling scrap
+- [ ] Credits shared between all players (team pool)
+- [ ] Credits persist across rounds (until game over)
+- [ ] Credits display in UI
+
+### 3.2 Shop/Store System
+- [ ] Shop terminal on ship
+- [ ] Item catalog with prices
+- [ ] Purchase confirmation
+- [ ] Item delivery system (items appear on ship)
+- [ ] Limited stock (optional)
+- [ ] Shop categories (tools, ship upgrades, suits)
+
+### 3.3 Purchasable Items
+- [ ] **Tools**
+  - [ ] Flashlight - $15
+  - [ ] Pro-flashlight - $25
+  - [ ] Walkie-talkie - $12
+  - [ ] Shovel - $30
+  - [ ] Stun grenade - $40
+  - [ ] Zap gun - $400
+  - [ ] Boombox - $60
+  - [ ] TZP-Inhalant (speed boost) - $120
+  - [ ] Radar-booster - $50
+  - [ ] Spray paint - $50
+  - [ ] Extension ladder - $60
+  - [ ] Lockpicker - $20
+  - [ ] Jetpack - $700
+- [ ] **Ship Upgrades**
+  - [ ] Teleporter - $375
+  - [ ] Inverse Teleporter - $425
+  - [ ] Loud horn - $100
+  - [ ] Signal translator - $255
+  - [ ] Ship lights upgrade - $50
+
+### 3.4 Moon/Map Selection
+- [ ] Multiple moons with different difficulties
+- [ ] Moon selection terminal
+- [ ] Travel cost per moon
+- [ ] Moon information display (weather, difficulty, loot multiplier)
+- [ ] **Starter Moon** - Free, easy, low loot
+- [ ] **Medium Moons** - $50-100, moderate danger
+- [ ] **Hard Moons** - $200+, high danger, high reward
+- [ ] Moon-specific monster spawns
+- [ ] Moon-specific layouts
+
+---
+
+## Phase 4: Procedural Map Generation
+
+### 4.1 Generation Algorithm
 - [ ] Implement seeded random number generator
 - [ ] Create Binary Space Partition (BSP) room generator
 - [ ] Create corridor generation between rooms
@@ -152,21 +205,42 @@ signallost/
 - [ ] Add entrance/exit placement
 - [ ] Generate navmesh for AI pathfinding
 
-### 3.2 Map Features
+### 4.2 Map Features
 - [ ] Define room prefab types (small, medium, large, special)
 - [ ] Implement door placement and state
 - [ ] Add vent/alternate path generation
 - [ ] Create outside terrain generation (simple)
 - [ ] Implement ship landing zone
-- [ ] Add environment hazards (optional)
+- [ ] **Fire exits** - Multiple facility entrances/exits
+- [ ] **Main entrance** - Large, obvious entry point
+- [ ] **Emergency exits** - Side doors, harder to find
+- [ ] **Ladders** - Vertical navigation between floors
+- [ ] **Catwalks** - Elevated walkways
 
-### 3.3 Chunk System
+### 4.3 Facility Hazards
+- [ ] **Landmines** - Proximity triggered explosives
+  - [ ] Visual indicator (can be spotted)
+  - [ ] Beeping sound when near
+  - [ ] Lethal damage on trigger
+  - [ ] Can be disarmed (optional)
+- [ ] **Turrets** - Auto-targeting defense systems
+  - [ ] Detection cone
+  - [ ] Charging sound before firing
+  - [ ] High damage, can kill quickly
+  - [ ] Can be disabled temporarily (stun)
+  - [ ] Safe zones (behind cover)
+- [ ] **Steam vents** - Periodic damage zones
+- [ ] **Broken floors** - Fall hazards
+- [ ] **Locked doors** - Require keys or lockpicker
+- [ ] **Powered doors** - Require facility power
+
+### 4.4 Chunk System
 - [ ] Implement chunk-based map loading
 - [ ] Create chunk visibility system
 - [ ] Optimize memory with chunk pooling
 - [ ] Implement chunk serialization for network sync
 
-### 3.4 Map Decoration
+### 4.5 Map Decoration
 - [ ] Procedural prop placement
 - [ ] Lighting placement
 - [ ] Scrap/item spawn point generation
@@ -174,7 +248,33 @@ signallost/
 
 ---
 
-## Phase 4: Client Core Systems
+## Phase 5: Weather System
+
+### 5.1 Weather Types
+- [ ] **Clear** - Normal visibility, baseline difficulty
+- [ ] **Foggy** - Reduced visibility outside, spooky atmosphere
+- [ ] **Rainy** - Wet sounds, puddles, slightly reduced visibility
+- [ ] **Stormy** - Lightning, thunder, very dangerous outside
+- [ ] **Flooded** - Water levels risen, some areas inaccessible
+- [ ] **Eclipsed** - Darkness during "day", all monsters active
+
+### 5.2 Weather Effects
+- [ ] Visual effects (rain particles, fog shader, lightning flashes)
+- [ ] Audio effects (rain sounds, thunder, wind)
+- [ ] Gameplay effects per weather type
+- [ ] Weather affects outside monster spawns
+- [ ] Weather display on moon selection
+- [ ] Weather changes over time (optional)
+
+### 5.3 Weather-Specific Mechanics
+- [ ] Lightning strikes (can kill players outside)
+- [ ] Flooding affects movement speed
+- [ ] Eclipse triggers night-time monster behavior
+- [ ] Fog reduces monster detection range too
+
+---
+
+## Phase 6: Client Core Systems
 
 ### 4.1 Network Client
 - [ ] Set up Colyseus client connection
@@ -274,6 +374,23 @@ signallost/
 - [ ] Door opening
 - [ ] Ship controls
 - [ ] Terminal usage
+- [ ] **Item Scanning** (RMB or dedicated key)
+  - [ ] Scan animation/effect
+  - [ ] Shows item name and value
+  - [ ] Scan range limit
+  - [ ] Can scan through walls (short range)
+  - [ ] Scan sound effect
+
+### 6.5 Death & Body System
+- [ ] Player death state
+- [ ] Death ragdoll physics
+- [ ] **Body persistence** - Dead bodies remain in world
+- [ ] **Body recovery** - Living players can pick up bodies
+- [ ] Body as two-handed item (heavy)
+- [ ] Bring body to ship for... respect? (optional mechanic)
+- [ ] Body despawn after round end
+- [ ] Death camera (brief view of killer)
+- [ ] Death notification to team
 
 ---
 
@@ -348,14 +465,48 @@ signallost/
   - Stats: Speed very low, damage very high, health very high
   - Behavior: Guards high-value loot areas
 
-### 8.4 Monster Spawning
+### 8.4 Outside Monsters (Different from inside)
+- [ ] **Giant** - Massive, patrols outside, instant kill
+  - [ ] Huge model, visible from far
+  - [ ] Slow movement, predictable patrol
+  - [ ] Eats players it catches
+  - [ ] Can be avoided by hiding
+- [ ] **Worm** - Underground, ambush predator
+  - [ ] Burrows underground
+  - [ ] Emerges to attack
+  - [ ] Triggered by surface movement
+  - [ ] Very rare spawn
+- [ ] **Dogs** - Pack hunters, blind but hear well
+  - [ ] Hunt in groups
+  - [ ] Completely blind
+  - [ ] Attracted to any sound
+  - [ ] Fast and deadly
+- [ ] **Birds** - Flying scouts
+  - [ ] Alert other monsters
+  - [ ] Fly away when approached
+  - [ ] Passive unless provoked
+
+### 8.5 Monster Spawning
 - [ ] Spawn point system in generated maps
 - [ ] Difficulty scaling (time-based)
 - [ ] Max monster limits
 - [ ] Respawn mechanics
-- [ ] Outside vs inside monsters
+- [ ] Outside vs inside monster separation
+- [ ] Time-based spawn increases
+- [ ] Moon difficulty affects spawn rates
 
-### 8.5 Monster Models & Animation
+### 8.6 Monster Mechanics
+- [ ] **Grab/Drag** - Some monsters grab players
+  - [ ] Grabbed state (can't move)
+  - [ ] Teammates can save (hit monster)
+  - [ ] Drag player to kill zone
+- [ ] **Stun vulnerability** - Monsters can be stunned
+  - [ ] Shovel stun
+  - [ ] Stun grenade effect
+  - [ ] Zap gun continuous stun
+  - [ ] Stun duration varies by monster
+
+### 8.7 Monster Models & Animation
 - [ ] Find/create monster models (Mixamo, Sketchfab)
 - [ ] Walk/run animations
 - [ ] Attack animations
@@ -427,32 +578,90 @@ signallost/
 - [ ] Quota success rewards
 - [ ] Increasing quota difficulty
 
+### 10.5 Ship Upgrades (Purchasable)
+- [ ] **Teleporter**
+  - [ ] Teleport pad in ship
+  - [ ] Select player on radar to teleport
+  - [ ] Teleports player back to ship
+  - [ ] Drops all items at original location
+  - [ ] Cooldown between uses
+- [ ] **Inverse Teleporter**
+  - [ ] Teleports player INTO facility randomly
+  - [ ] Useful for reaching deep areas quickly
+  - [ ] Risk: random location may be dangerous
+- [ ] **Loud Horn**
+  - [ ] Warning horn for ship departure
+  - [ ] Can be heard from anywhere on moon
+  - [ ] Attracts monsters briefly
+- [ ] **Signal Translator**
+  - [ ] Shows monster signals on radar
+  - [ ] Useful for tracking threats
+
+### 10.6 Ship Radar System
+- [ ] Radar screen on terminal
+- [ ] Shows facility layout (if scanned)
+- [ ] **Player tracking** - Dots for each player
+- [ ] Player names on hover
+- [ ] Real-time position updates
+- [ ] Dead players shown differently
+- [ ] Can select player for teleporter
+- [ ] Radar range limited to facility
+
 ---
 
-## Phase 11: Voice Chat System
+## Phase 11: Sound/Noise Mechanics
 
-### 11.1 WebRTC Setup
+### 11.1 Noise System
+- [ ] Every action has a noise level
+- [ ] Noise attracts monsters
+- [ ] Noise propagation through rooms
+- [ ] Noise visualization (optional debug)
+
+### 11.2 Noise Sources
+- [ ] **Walking** - Low noise
+- [ ] **Running** - Medium noise
+- [ ] **Jumping** - Medium noise
+- [ ] **Dropping items** - Varies by item weight
+- [ ] **Opening doors** - Low-medium noise
+- [ ] **Voice chat** - Attracts monsters!
+- [ ] **Walkie-talkie static** - Low noise
+- [ ] **Boombox** - High noise (distraction tool)
+- [ ] **Shovel hit** - Medium noise
+- [ ] **Flashlight click** - Very low noise
+
+### 11.3 Stealth Mechanics
+- [ ] Crouching reduces noise significantly
+- [ ] Slow walking (walk key) even quieter
+- [ ] Surface affects noise (metal louder than carpet)
+- [ ] Monsters have noise detection threshold
+- [ ] Can hide and wait for monsters to pass
+
+---
+
+## Phase 12: Voice Chat System
+
+### 12.1 WebRTC Setup
 - [ ] Simple-peer integration
 - [ ] Colyseus signaling (offer/answer exchange)
 - [ ] ICE candidate handling
 - [ ] Connection state management
 - [ ] Automatic reconnection
 
-### 11.2 Audio Processing
+### 12.2 Audio Processing
 - [ ] Microphone capture
 - [ ] Noise suppression (optional)
 - [ ] Volume normalization
 - [ ] Push-to-talk option
 - [ ] Voice activity detection
 
-### 11.3 Proximity Voice
+### 12.3 Proximity Voice
 - [ ] Distance-based volume falloff
 - [ ] Maximum hear distance (15 units default)
 - [ ] Obstruction detection (walls muffle)
 - [ ] Spatial audio (left/right panning)
 - [ ] Dead players can't talk to living
 
-### 11.4 Walkie-Talkie
+### 12.4 Walkie-Talkie
 - [ ] Extended range communication
 - [ ] Channel system (everyone on same channel)
 - [ ] Static/distortion effect
@@ -460,7 +669,7 @@ signallost/
 - [ ] Toggle on/off (T key)
 - [ ] Visual indicator when in use
 
-### 11.5 Voice UI
+### 12.5 Voice UI
 - [ ] Speaking indicator (who's talking)
 - [ ] Microphone mute toggle
 - [ ] Volume controls
@@ -468,7 +677,7 @@ signallost/
 
 ---
 
-## Phase 12: Text Chat System
+## Phase 13: Text Chat System
 
 ### 12.1 Chat Implementation
 - [ ] Chat input field
@@ -492,7 +701,7 @@ signallost/
 
 ---
 
-## Phase 13: Audio System
+## Phase 14: Audio System
 
 ### 13.1 Audio Engine
 - [ ] Howler.js setup
@@ -525,7 +734,7 @@ signallost/
 
 ---
 
-## Phase 14: User Interface
+## Phase 15: User Interface
 
 ### 14.1 Main Menu
 - [ ] Game logo/title
@@ -579,7 +788,7 @@ signallost/
 
 ---
 
-## Phase 15: Game Flow & Round System
+## Phase 16: Game Flow & Round System
 
 ### 15.1 Lobby Flow
 - [ ] Player joins lobby
@@ -607,9 +816,27 @@ signallost/
 - [ ] New items available (shop - optional)
 - [ ] Different moon/map selection (optional)
 
+### 16.5 Host Migration
+- [ ] Detect host disconnection
+- [ ] Automatic host transfer to next player
+- [ ] Seamless game continuation
+- [ ] State preservation during migration
+- [ ] Notification to all players
+- [ ] Fallback if migration fails
+
+### 16.6 Ping/Marker System
+- [ ] Ping key (Middle mouse or Z)
+- [ ] Visual marker in world
+- [ ] Marker visible through walls
+- [ ] Marker color per player
+- [ ] Marker auto-expire (10 seconds)
+- [ ] "Danger" ping variant (double-tap)
+- [ ] Ping sound notification
+- [ ] Compass shows ping direction
+
 ---
 
-## Phase 16: Performance Optimization
+## Phase 17: Performance Optimization
 
 ### 16.1 Rendering Optimization
 - [ ] Level of Detail (LOD) system
@@ -640,7 +867,7 @@ signallost/
 
 ---
 
-## Phase 17: Polish & Quality
+## Phase 18: Polish & Quality
 
 ### 17.1 Visual Polish
 - [ ] Screen shake on damage
@@ -670,7 +897,36 @@ signallost/
 
 ---
 
-## Phase 18: Assets
+## Phase 19: Bestiary & Log System
+
+### 19.1 Bestiary (Monster Log)
+- [ ] Unlockable monster entries
+- [ ] Monster discovered on first encounter
+- [ ] Monster image/silhouette
+- [ ] Monster stats (speed, danger level)
+- [ ] Monster behavior hints
+- [ ] Scan monster to add to bestiary
+- [ ] Bestiary accessible from pause menu
+
+### 19.2 Game Log/Journal
+- [ ] Mission history
+- [ ] Scrap collected per round
+- [ ] Deaths per round
+- [ ] Moons visited
+- [ ] Total credits earned
+- [ ] Playtime tracking
+
+### 19.3 Achievements (Optional)
+- [ ] First scrap collected
+- [ ] Survive first night
+- [ ] Meet quota 5 times
+- [ ] Discover all monsters
+- [ ] Visit all moons
+- [ ] Achievement notifications
+
+---
+
+## Phase 20: Assets
 
 ### 18.1 3D Models (Priority)
 - [ ] Player character model (first-person arms)
@@ -709,7 +965,7 @@ signallost/
 
 ---
 
-## Phase 19: Deployment & DevOps
+## Phase 21: Deployment & DevOps
 
 ### 19.1 Build Configuration
 - [ ] Production build scripts
@@ -739,7 +995,7 @@ signallost/
 
 ---
 
-## Phase 20: Testing & Documentation
+## Phase 22: Testing & Documentation
 
 ### 20.1 Testing
 - [ ] Unit tests for game logic
@@ -766,63 +1022,66 @@ signallost/
 
 ## Implementation Order (Recommended)
 
-### Sprint 1: Foundation (Week 1)
-1. Phase 1.1 - Project Setup
-2. Phase 1.2 - Development Infrastructure
-3. Phase 2.1 - Server Foundation
-4. Phase 2.2 - Room System
-5. Phase 4.1 - Network Client
+### Sprint 1: Foundation
+1. Phase 1 - Project Foundation (setup, infrastructure)
+2. Phase 2 - Game Server (Colyseus rooms, state)
 
-### Sprint 2: Core Movement (Week 2)
-1. Phase 5.1 - Scene Setup
-2. Phase 6.1 - First-Person Controller
-3. Phase 6.2 - Player Physics
-4. Phase 4.2 - State Management
-5. Phase 4.3 - Input System
+### Sprint 2: Core Movement & Rendering
+1. Phase 6 - Client Core Systems (network, state, input)
+2. Phase 7 - 3D Rendering (scene, player, environment)
+3. Phase 8 - Player Controller (movement, physics, interactions)
 
-### Sprint 3: Multiplayer Sync (Week 3)
-1. Phase 2.3 - State Schemas
-2. Phase 2.4 - Server Game Loop
-3. Phase 5.2 - Player Rendering
-4. Multiplayer movement sync testing
+### Sprint 3: Multiplayer Sync
+1. Server game loop implementation
+2. Player state synchronization
+3. Multiplayer movement testing
+4. Client-side prediction
 
-### Sprint 4: World Generation (Week 4)
-1. Phase 3.1 - Generation Algorithm
-2. Phase 3.2 - Map Features
-3. Phase 5.3 - Environment Rendering
-4. Phase 5.4 - Lighting System
+### Sprint 4: World Generation
+1. Phase 4 - Procedural Map Generation (BSP, rooms, hazards)
+2. Phase 5 - Weather System
+3. Environment rendering and lighting
 
-### Sprint 5: Items & Inventory (Week 5)
-1. Phase 7.1 - Inventory Structure
-2. Phase 7.2 - Item Types
-3. Phase 7.3 - Item Mechanics
-4. Phase 7.4 - Inventory UI
+### Sprint 5: Economy & Items
+1. Phase 3 - Economy System (credits, shop, moons)
+2. Phase 9 - Inventory System (items, tools, scanning)
+3. Item networking and sync
 
-### Sprint 6: Enemies (Week 6)
-1. Phase 8.1 - AI Foundation
-2. Phase 8.2 - AI States
-3. Phase 8.3 - Monster Types
-4. Phase 8.4 - Monster Spawning
+### Sprint 6: Enemies & AI
+1. Phase 10 - Monster System (AI, states, pathfinding)
+2. Inside monsters implementation
+3. Outside monsters implementation
+4. Monster spawning and difficulty
 
-### Sprint 7: Time & Ship (Week 7)
-1. Phase 9 - Day/Night System (all)
-2. Phase 10 - Ship System (all)
-3. Phase 15 - Game Flow (all)
+### Sprint 7: Core Game Loop
+1. Phase 11 - Day/Night & Time System
+2. Phase 12 - Ship System (teleporter, radar, upgrades)
+3. Phase 16 - Game Flow (rounds, quota, host migration)
 
-### Sprint 8: Communication (Week 8)
-1. Phase 11 - Voice Chat (all)
-2. Phase 12 - Text Chat (all)
-3. Phase 13 - Audio System (all)
+### Sprint 8: Communication
+1. Phase 13 - Sound/Noise Mechanics
+2. Phase 14 - Voice Chat (proximity, walkie-talkie)
+3. Phase 15 - Text Chat
+4. Phase 16 - Audio System
 
-### Sprint 9: UI & Polish (Week 9)
-1. Phase 14 - User Interface (all)
-2. Phase 17 - Polish (all)
-3. Phase 18 - Assets (remaining)
+### Sprint 9: UI & Features
+1. Phase 17 - User Interface (menus, HUD, settings)
+2. Phase 19 - Bestiary & Log System
+3. Ping/marker system
 
-### Sprint 10: Deployment (Week 10)
-1. Phase 16 - Optimization (all)
-2. Phase 19 - Deployment (all)
-3. Phase 20 - Testing & Docs (all)
+### Sprint 10: Polish & Assets
+1. Phase 18 - Polish & Quality
+2. Phase 20 - Assets (models, textures, audio)
+
+### Sprint 11: Optimization
+1. Phase 17 - Performance Optimization
+2. Network optimization
+3. Rendering optimization
+
+### Sprint 12: Deployment & Testing
+1. Phase 21 - Deployment & DevOps
+2. Phase 22 - Testing & Documentation
+3. Final bug fixes and polish
 
 ---
 
@@ -835,6 +1094,7 @@ signallost/
 | Mouse | Look |
 | Shift | Sprint |
 | Ctrl | Crouch |
+| Alt | Slow Walk (quieter) |
 | Space | Jump |
 | E | Interact/Pickup |
 | G | Drop Item |
@@ -843,9 +1103,13 @@ signallost/
 | 1-4 | Select Item Slot |
 | F | Toggle Flashlight |
 | T | Toggle Walkie-Talkie |
+| V | Push-to-Talk |
 | Y | Open Chat |
 | Tab | Inventory/Status |
 | Esc | Pause Menu |
+| RMB | Scan Item |
+| Z / MMB | Ping/Mark Location |
+| B | Open Bestiary |
 
 ### Network Ports
 | Service | Port |
